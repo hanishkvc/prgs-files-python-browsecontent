@@ -2,6 +2,8 @@
 # v20200406IST0918, HanishKVC
 
 
+import gi
+gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import sys
 
@@ -15,8 +17,9 @@ class UdemyKUI(Gtk.Application):
 
 	def do_activate(self):
 		wMain = Gtk.Window(application=self)
-		wMain.set_title(APPNAME)
+		wMain.set_title(self.APPNAME)
 		wMain.show_all()
+
 
 if __name__ == '__main__':
 	app = UdemyKUI()
