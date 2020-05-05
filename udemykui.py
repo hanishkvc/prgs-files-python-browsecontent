@@ -6,6 +6,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 import sys
+import os
 
 
 APPNAME = "UdemyKUI"
@@ -19,6 +20,19 @@ class MainWin(Gtk.ApplicationWindow):
 		Gtk.Window.__init__(self, title=APPNAME, application=app)
 		self.set_default_size(DEFAULT_WIDTH, DEFAULT_HEIGHT)
 		self.set_position(Gtk.WindowPosition.CENTER)
+		self.build_ui()
+
+	def build_ui(self):
+		self.lbMain = Gtk.ListBox()
+		self.add(self.lbMain)
+		self.update_lb()
+
+	def update_lb(self, path="."):
+		dirContents = os.listdir(path)
+		for cur in dirContents:
+			print(cur)
+			lbl = Gtk.Label(cur)
+			self.lbMain.add(lbl)
 
 
 class UdemyKUI(Gtk.Application):
