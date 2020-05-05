@@ -16,10 +16,12 @@ DEFAULT_HEIGHT = 480
 
 class MainWin(Gtk.ApplicationWindow):
 
-	def __init__(self, app):
+	def __init__(self, app, basePath):
 		Gtk.Window.__init__(self, title=APPNAME, application=app)
 		self.set_default_size(DEFAULT_WIDTH, DEFAULT_HEIGHT)
 		self.set_position(Gtk.WindowPosition.CENTER)
+		self.basePath = basePath
+		self.curPath = basePath
 		self.build_ui()
 
 	def build_ui(self):
@@ -31,7 +33,9 @@ class MainWin(Gtk.ApplicationWindow):
 	def on_lb_row_activated(self, listbox, listboxrow):
 		print("listbox: {};\n\t listboxrow: {}".format(listbox, listboxrow))
 
-	def update_lb(self, path="."):
+	def update_lb(self, path=None):
+		if path == None:
+			path = self.curPath
 		dirContents = os.listdir(path)
 		for cur in dirContents:
 			print(cur)
@@ -42,16 +46,17 @@ class MainWin(Gtk.ApplicationWindow):
 class UdemyKUI(Gtk.Application):
 	wMain = None
 
-	def __init__(self):
+	def __init__(self, basePath="."):
 		Gtk.Application.__init__(self, application_id="hanishkvc.edu.udemykui")
+		self.basePath = basePath
 
 	def do_activate(self):
-		self.wMain = MainWin(self)
+		self.wMain = MainWin(self, self.basePath)
 		self.wMain.show_all()
 
 
 if __name__ == '__main__':
-	app = UdemyKUI()
-	exitStatus = app.run(sys.argv)
+	app = UdemyKUI(sys.argv[1])
+	exitStatus = app.run(sys.argv[2:])
 	sys.exit(exitStatus)
 
