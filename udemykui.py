@@ -26,6 +26,10 @@ class MainWin(Gtk.ApplicationWindow):
 		self.lbMain = Gtk.ListBox()
 		self.add(self.lbMain)
 		self.update_lb()
+		self.lbMain.connect("row-activated", self.on_lb_row_activated)
+
+	def on_lb_row_activated(self, listbox, listboxrow):
+		print("listbox: {};\n\t listboxrow: {}".format(listbox, listboxrow))
 
 	def update_lb(self, path="."):
 		dirContents = os.listdir(path)
