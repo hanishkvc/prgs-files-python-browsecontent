@@ -8,25 +8,32 @@ from gi.repository import Gtk
 import sys
 
 
+APPNAME = "UdemyKUI"
+DEFAULT_WIDTH = 640
+DEFAULT_HEIGHT = 480
+
+
+class MainWin(Gtk.ApplicationWindow):
+
+	def __init__(self, app):
+		Gtk.Window.__init__(self, title=APPNAME, application=app)
+		self.set_default_size(DEFAULT_WIDTH, DEFAULT_HEIGHT)
+		self.set_position(Gtk.WindowPosition.CENTER)
+
+
 class UdemyKUI(Gtk.Application):
-	APPNAME = "UdemyKUI"
-	DEFAULT_WIDTH = 640
-	DEFAULT_HEIGHT = 480
 	wMain = None
 
 	def __init__(self):
 		Gtk.Application.__init__(self, application_id="hanishkvc.edu.udemykui")
 
-
 	def do_activate(self):
-		wMain = Gtk.Window(application=self)
-		wMain.set_title(self.APPNAME)
-		wMain.set_default_size(self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
-		wMain.set_position(Gtk.WindowPosition.CENTER)
-		wMain.show_all()
-		self.wMain = wMain
+		self.wMain = MainWin(self)
+		self.wMain.show_all()
 
 
 if __name__ == '__main__':
 	app = UdemyKUI()
-	app.run(sys.argv)
+	exitStatus = app.run(sys.argv)
+	sys.exit(exitStatus)
+
