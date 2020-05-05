@@ -31,7 +31,13 @@ class MainWin(Gtk.ApplicationWindow):
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
 
 	def on_lb_row_activated(self, listbox, listboxrow):
-		print("listbox: {};\n\t listboxrow: {}".format(listbox, listboxrow))
+		i = listboxrow.get_index()
+		numDirs = len(self.curDirList)
+		numFiles = len(self.curFileList)
+		if i >= numDirs:
+			print("File: {}".format(self.curFileList[i-numDirs]))
+		else:
+			print("Dir: {}".format(self.curDirList[i]))
 
 	def update_lb(self, path=None, mode="all"):
 		if path == None:
