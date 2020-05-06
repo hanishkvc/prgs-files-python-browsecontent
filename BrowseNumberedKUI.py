@@ -145,7 +145,7 @@ class MainWin(Gtk.ApplicationWindow):
 			else:
 				continue
 		# Remove unwanted files
-		newFileList = filter(lambda x: if x.endswith('srt'): return False, self.curFileList)
+		newFileList = filter(lambda x: False if x.endswith('srt') else True, self.curFileList)
 		self.curFileList = newFileList
 		# Add things to listbox
 		for cur in self.curDirList:
