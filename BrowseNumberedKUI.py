@@ -109,8 +109,7 @@ class MainWin(Gtk.ApplicationWindow):
 			self.curPath = thePath
 			self.update_lb()
 		elif sType == "file":
-			#self.wvMain.load_uri(thePath)
-			self.wvMain.load_uri("file:///tmp/test1.html")
+			self.wvMain.load_uri("file:///%s"%(os.path.abspath(thePath)))
 		self.show_all()
 
 	def lb_up(self, theLB):
