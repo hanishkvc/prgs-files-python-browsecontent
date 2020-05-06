@@ -45,6 +45,7 @@ class MainWin(Gtk.ApplicationWindow):
 		# Add the listbox in a scrolled window
 		self.swMain = Gtk.ScrolledWindow()
 		self.swMain.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+		self.swMain.set_min_content_width(self.scrWidth*0.25)
 		self.swMain.set_min_content_height(self.scrHeight*0.9)
 		self.swMain.set_max_content_height(self.scrHeight*0.9)
 		self.lbMain = Gtk.ListBox()
@@ -58,7 +59,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.wvMain.load_html("<html> <head><title> Browser </title></head> <body> <center> Satyameva Jayate </center> </body> </html>")
 		self.swWV = Gtk.ScrolledWindow()
 		self.swWV.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-		self.swWV.set_min_content_width(self.scrWidth*0.7)
+		self.swWV.set_min_content_width(self.scrWidth*0.65)
 		self.swWV.add(self.wvMain)
 		self.gridMain.attach(self.swWV,5,1,8,9)
 		# Add the buttons
