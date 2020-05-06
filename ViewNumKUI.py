@@ -78,7 +78,7 @@ class MainWin(Gtk.ApplicationWindow):
 		if sType == "dir":
 			self.curPath = os.path.join(self.curPath, sPath)
 			self.update_lb()
-			self.queue_draw()
+			self.show_all()
 
 	def on_btn_clicked(self, button):
 		if button == self.btnUp:
