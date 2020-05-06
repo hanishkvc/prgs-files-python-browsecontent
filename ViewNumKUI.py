@@ -75,9 +75,11 @@ class MainWin(Gtk.ApplicationWindow):
 		if mode=="next":
 			theLB.select_row(rowNext)
 			theLB.set_focus_child(rowNext)
+			rowNext.get_child().grab_focus()
 		if mode=="prev":
 			theLB.select_row(rowPrev)
-			theLB.set_focus_child(rowNext)
+			theLB.set_focus_child(rowPrev)
+			rowPrev.get_child().grab_focus()
 
 	def lb_play(self, theLB):
 		rowSel = theLB.get_selected_row()
