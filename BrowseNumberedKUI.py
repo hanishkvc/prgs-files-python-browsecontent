@@ -4,7 +4,7 @@
 
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 gi.require_version('WebKit2', '4.0')
 from gi.repository import WebKit2
 import sys
@@ -26,7 +26,9 @@ class MainWin(Gtk.ApplicationWindow):
 
 	def __init__(self, app, basePath):
 		Gtk.Window.__init__(self, title=APPNAME, application=app)
-		self.set_default_size(DEFAULT_WIDTH, DEFAULT_HEIGHT)
+		self.scrWidth = Gdk.Screen().width()
+		self.scrHeight = Gdk.Screen().height()
+		self.set_default_size(self.scrWidth, self.scrHeight)
 		self.set_position(Gtk.WindowPosition.CENTER)
 		self.basePath = basePath
 		self.curPath = basePath
@@ -38,8 +40,8 @@ class MainWin(Gtk.ApplicationWindow):
 		# Add the listbox in a scrolled window
 		self.swMain = Gtk.ScrolledWindow()
 		self.swMain.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-		self.swMain.set_min_content_height(DEFAULT_HEIGHT*0.9)
-		self.swMain.set_max_content_height(DEFAULT_HEIGHT*0.9)
+		self.swMain.set_min_content_height(self.scrHeight*0.9)
+		self.swMain.set_max_content_height(self.scrHeight*0.9)
 		self.lbMain = Gtk.ListBox()
 		#self.swMain.add_with_viewport(self.lbMain)
 		self.swMain.add(self.lbMain)
@@ -48,6 +50,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
 		# Add a WebView
 		self.wvMain = WebKit2.WebView()
+		self.wvMain.set_min_content_width(self.scrWidth*0.5)
 		self.wvMain.load_uri("file:///tmp/test.html")
 		self.gridMain.attach(self.wvMain,5,1,8,9)
 		# Add the buttons
