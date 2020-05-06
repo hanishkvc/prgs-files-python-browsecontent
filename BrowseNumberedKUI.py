@@ -5,6 +5,8 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+gi.require_version('WebKit2', '4.0')
+from gi.repository import WebKit2
 import sys
 import os
 
@@ -41,9 +43,13 @@ class MainWin(Gtk.ApplicationWindow):
 		self.lbMain = Gtk.ListBox()
 		#self.swMain.add_with_viewport(self.lbMain)
 		self.swMain.add(self.lbMain)
-		self.gridMain.attach(self.swMain,1,1,9,9)
+		self.gridMain.attach(self.swMain,1,1,4,9)
 		self.update_lb()
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
+		# Add a WebView
+		self.wvMain = WebKit2.WebView()
+		self.wvMain.load_uri("file:///tmp/test.html")
+		self.gridMain.attach(self.wvMain,5,1,8,9)
 		# Add the buttons
 		self.btnUp = Gtk.Button(label="Up")
 		self.btnUp.connect("clicked", self.on_btn_clicked)
