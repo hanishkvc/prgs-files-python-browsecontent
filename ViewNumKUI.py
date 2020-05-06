@@ -30,6 +30,8 @@ class MainWin(Gtk.ApplicationWindow):
 		# Add the listbox in a scrolled window
 		self.swMain = Gtk.ScrolledWindow()
 		self.swMain.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+		self.swMain.set_min_content_height(DEFAULT_HEIGHT*0.9)
+		self.swMain.set_max_content_height(DEFAULT_HEIGHT*0.9)
 		self.lbMain = Gtk.ListBox()
 		self.swMain.add(self.lbMain)
 		self.gridMain.attach(self.swMain,1,1,9,9)
@@ -72,8 +74,10 @@ class MainWin(Gtk.ApplicationWindow):
 			rowPrev = rowFirst
 		if mode=="next":
 			theLB.select_row(rowNext)
+			theLB.set_focus_child(rowNext)
 		if mode=="prev":
 			theLB.select_row(rowPrev)
+			theLB.set_focus_child(rowNext)
 
 	def lb_play(self, theLB):
 		rowSel = theLB.get_selected_row()
