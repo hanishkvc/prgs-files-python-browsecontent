@@ -69,6 +69,9 @@ class MainWin(Gtk.ApplicationWindow):
 		self.btnBase = Gtk.Button(label="Base")
 		self.btnBase.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnBase,1,10,1,1)
+		self.btnLast = Gtk.Button(label="Last")
+		self.btnLast.connect("clicked", self.on_btn_clicked)
+		self.gridMain.attach(self.btnLast,2,10,1,1)
 		self.btnUp = Gtk.Button(label="Up")
 		self.btnUp.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnUp,6,10,1,1)
@@ -130,6 +133,7 @@ class MainWin(Gtk.ApplicationWindow):
 			self.curPath = thePath
 			self.update_lb()
 		elif sType == "file":
+			self.lastFile = thePath
 			self.wvMain.load_uri("file:///%s"%(os.path.abspath(thePath)))
 		self.show_all()
 
@@ -147,6 +151,10 @@ class MainWin(Gtk.ApplicationWindow):
 		if button == self.btnBase:
 			dprint("INFO:btn_clicked: Base")
 			self.lb_play(self.lbMain, "dir:%s"%(self.basePath))
+		elif button == self.btnLast:
+			dprint("INFO:btn_clicked: Last")
+			thePath = os.path.dirname(self.lastFile)
+			self.lb_play(self.lbMain, "dir:%s"%(thePath))
 		elif button == self.btnUp:
 			dprint("INFO:btn_clicked: Up")
 			self.lb_up(self.lbMain)
