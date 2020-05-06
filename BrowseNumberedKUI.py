@@ -14,6 +14,12 @@ DEFAULT_WIDTH = 640
 DEFAULT_HEIGHT = 480
 
 
+GDEBUGLEVEL = 10
+def dprint(sMsg, dbgLvl=GDEBUGLEVEL):
+	if dbgLvl < GDEBUGLEVEL:
+		print(sMsg)
+
+
 class MainWin(Gtk.ApplicationWindow):
 
 	def __init__(self, app, basePath):
@@ -73,14 +79,19 @@ class MainWin(Gtk.ApplicationWindow):
 			rowNext = rowFirst
 		if rowPrev == None:
 			rowPrev = rowFirst
+		sCurRow = None
 		if mode=="next":
 			theLB.select_row(rowNext)
 			theLB.set_focus_child(rowNext)
 			rowNext.get_child().grab_focus()
+			sCurRow = "Next:%s"%(rowNext.get_child().get_text())
 		if mode=="prev":
 			theLB.select_row(rowPrev)
 			theLB.set_focus_child(rowPrev)
 			rowPrev.get_child().grab_focus()
+			sCurRow = "Prev:%s"%(rowPrev.get_child().get_text())
+		if sCurRow != None:
+			print(sCurRow)
 
 	def lb_play(self, theLB):
 		rowSel = theLB.get_selected_row()
@@ -98,21 +109,22 @@ class MainWin(Gtk.ApplicationWindow):
 			self.curPath = newPath
 			self.update_lb()
 			self.show_all()
+			print("Up:%s"%(self.curPath))
 		else:
 			print("INFO:lb_up: Already reached top")
 
 	def on_btn_clicked(self, button):
 		if button == self.btnUp:
-			print("INFO:btn_clicked: Up")
+			dprint("INFO:btn_clicked: Up")
 			self.lb_up(self.lbMain)
 		elif button == self.btnPrev:
-			print("INFO:btn_clicked: Prev")
+			dprint("INFO:btn_clicked: Prev")
 			self.lb_select(self.lbMain, mode="prev")
 		elif button == self.btnPlay:
-			print("INFO:btn_clicked: Play")
+			dprint("INFO:btn_clicked: Play")
 			self.lb_play(self.lbMain)
 		elif button == self.btnNext:
-			print("INFO:btn_clicked: Next")
+			dprint("INFO:btn_clicked: Next")
 			self.lb_select(self.lbMain, mode="next")
 
 	def on_lb_row_activated(self, listbox, listboxrow):
