@@ -9,7 +9,7 @@ import sys
 import os
 
 
-APPNAME = "ViewNumKUI"
+APPNAME = "BrowseNumberedKUI"
 DEFAULT_WIDTH = 640
 DEFAULT_HEIGHT = 480
 
@@ -153,11 +153,11 @@ class MainWin(Gtk.ApplicationWindow):
 			self.lbMain.add(lbl)
 
 
-class ViewNumKUI(Gtk.Application):
+class BrowseNumberedKUI(Gtk.Application):
 	wMain = None
 
 	def __init__(self, basePath="."):
-		Gtk.Application.__init__(self, application_id="hanishkvc.edu.viewnumkui")
+		Gtk.Application.__init__(self, application_id="hanishkvc.browse.numbered.kui")
 		self.basePath = basePath
 
 	def do_activate(self):
@@ -166,7 +166,7 @@ class ViewNumKUI(Gtk.Application):
 
 
 if __name__ == '__main__':
-	app = ViewNumKUI(sys.argv[1])
+	app = BrowseNumberedKUI(sys.argv[1])
 	exitStatus = app.run(sys.argv[2:])
 	sys.exit(exitStatus)
 
