@@ -75,6 +75,10 @@ class MainWin(Gtk.ApplicationWindow):
 		sContent = rowSel.get_child().get_text()
 		[sType, sPath] = sContent.split(':',1)
 		print(sType, sPath)
+		if sType == "dir":
+			self.curPath = os.path.join(self.curPath, sPath)
+			self.update_lb()
+			self.queue_draw()
 
 	def on_btn_clicked(self, button):
 		if button == self.btnUp:
@@ -98,7 +102,12 @@ class MainWin(Gtk.ApplicationWindow):
 		else:
 			print("Dir: {}".format(self.curDirList[i]))
 
+	def clear_lb(self):
+		for i in self.lbMain:
+			self.lbMain.remove(i)
+
 	def update_lb(self, path=None, mode="all"):
+		self.clear_lb()
 		if path == None:
 			path = self.curPath
 		dirContents = os.listdir(path)
