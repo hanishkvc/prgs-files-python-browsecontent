@@ -50,9 +50,12 @@ class MainWin(Gtk.ApplicationWindow):
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
 		# Add a WebView
 		self.wvMain = WebKit2.WebView()
-		self.wvMain.set_min_content_width(self.scrWidth*0.5)
 		self.wvMain.load_uri("file:///tmp/test.html")
-		self.gridMain.attach(self.wvMain,5,1,8,9)
+		self.swWV = Gtk.ScrolledWindow()
+		self.swWV.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+		self.swWV.set_min_content_width(self.scrWidth*0.7)
+		self.swWV.add(self.wvMain)
+		self.gridMain.attach(self.swWV,5,1,8,9)
 		# Add the buttons
 		self.btnUp = Gtk.Button(label="Up")
 		self.btnUp.connect("clicked", self.on_btn_clicked)
