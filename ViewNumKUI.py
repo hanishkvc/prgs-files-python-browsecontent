@@ -70,6 +70,12 @@ class MainWin(Gtk.ApplicationWindow):
 		if mode=="prev":
 			theLB.select_row(rowPrev)
 
+	def lb_play(self, theLB):
+		rowSel = theLB.get_selected_row()
+		sContent = rowSel.get_child().get_text()
+		[sType, sPath] = sContent.split(':',1)
+		print(sType, sPath)
+
 	def on_btn_clicked(self, button):
 		if button == self.btnUp:
 			print("INFO:btn_clicked: Up")
@@ -78,6 +84,7 @@ class MainWin(Gtk.ApplicationWindow):
 			self.lb_select(self.lbMain, mode="prev")
 		elif button == self.btnPlay:
 			print("INFO:btn_clicked: Play")
+			self.lb_play(self.lbMain)
 		elif button == self.btnNext:
 			print("INFO:btn_clicked: Next")
 			self.lb_select(self.lbMain, mode="next")
