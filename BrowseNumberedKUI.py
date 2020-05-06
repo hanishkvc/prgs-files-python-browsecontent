@@ -26,10 +26,10 @@ class MainWin(Gtk.ApplicationWindow):
 
 	def __init__(self, app, basePath=".", width=DEFAULT_WIDTH, height=DEFAULT_HEIGHT):
 		Gtk.Window.__init__(self, title=APPNAME, application=app)
-		if width = None:
+		if width == None:
 			width = self.get_screen().width()
 		self.scrWidth = width
-		if height = None:
+		if height == None:
 			height = self.get_screen().height()
 		self.scrHeight = height
 		self.set_default_size(self.scrWidth, self.scrHeight)
@@ -203,7 +203,10 @@ class BrowseNumberedKUI(Gtk.Application):
 
 
 if __name__ == '__main__':
-	app = BrowseNumberedKUI(sys.argv[1])
-	exitStatus = app.run(sys.argv[2:])
+	sPath = "."
+	if len(sys.argv) > 1:
+		sPath = sys.argv[1]
+	app = BrowseNumberedKUI(sPath)
+	exitStatus = app.run()
 	sys.exit(exitStatus)
 
