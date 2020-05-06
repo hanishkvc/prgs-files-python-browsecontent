@@ -24,10 +24,14 @@ def dprint(sMsg, dbgLvl=GDEBUGLEVEL):
 
 class MainWin(Gtk.ApplicationWindow):
 
-	def __init__(self, app, basePath):
+	def __init__(self, app, basePath=".", width=DEFAULT_WIDTH, height=DEFAULT_HEIGHT):
 		Gtk.Window.__init__(self, title=APPNAME, application=app)
-		self.scrWidth = Gdk.Screen().width()
-		self.scrHeight = Gdk.Screen().height()
+		if width = None:
+			width = self.get_screen().width()
+		self.scrWidth = width
+		if height = None:
+			height = self.get_screen().height()
+		self.scrHeight = height
 		self.set_default_size(self.scrWidth, self.scrHeight)
 		self.set_position(Gtk.WindowPosition.CENTER)
 		self.basePath = basePath
@@ -50,7 +54,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
 		# Add a WebView
 		self.wvMain = WebKit2.WebView()
-		self.wvMain.load_uri("file:///tmp/test.html")
+		self.wvMain.load_html("<html> <head><title> Browser </title></head> <body> Satyameva Jayate </body> </html>")
 		self.swWV = Gtk.ScrolledWindow()
 		self.swWV.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 		self.swWV.set_min_content_width(self.scrWidth*0.7)
@@ -194,7 +198,7 @@ class BrowseNumberedKUI(Gtk.Application):
 		self.basePath = basePath
 
 	def do_activate(self):
-		self.wMain = MainWin(self, self.basePath)
+		self.wMain = MainWin(self, self.basePath, None, None)
 		self.wMain.show_all()
 
 
