@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# v20200406IST0918, HanishKVC
+# A simple browser of file contents in a given directory and its subdirs
+# v20200506IST2348, HanishKVC
 
 
 import gi
@@ -11,7 +12,7 @@ import sys
 import os
 
 
-APPNAME = "BrowseNumberedKUI"
+APPNAME = "BrowseContentKUI"
 DEFAULT_WIDTH = 800
 DEFAULT_HEIGHT = 600
 
@@ -199,11 +200,11 @@ class MainWin(Gtk.ApplicationWindow):
 			self.lbMain.add(lbl)
 
 
-class BrowseNumberedKUI(Gtk.Application):
+class BrowseContentKUI(Gtk.Application):
 	wMain = None
 
 	def __init__(self, basePath="."):
-		Gtk.Application.__init__(self, application_id="hanishkvc.browse.numbered.kui")
+		Gtk.Application.__init__(self, application_id="hanishkvc.browse.content.kui")
 		self.basePath = basePath
 
 	def do_activate(self):
@@ -215,7 +216,7 @@ if __name__ == '__main__':
 	sPath = "."
 	if len(sys.argv) > 1:
 		sPath = sys.argv[1]
-	app = BrowseNumberedKUI(sPath)
+	app = BrowseContentKUI(sPath)
 	exitStatus = app.run()
 	sys.exit(exitStatus)
 
