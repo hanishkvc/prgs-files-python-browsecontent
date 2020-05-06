@@ -25,13 +25,14 @@ class MainWin(Gtk.ApplicationWindow):
 		self.build_ui()
 
 	def build_ui(self):
+		self.gridMain = Gtk.Grid()
+		self.add(self.gridMain)
 		self.lbMain = Gtk.ListBox()
-		self.add(self.lbMain)
-		#self.lbMain.set_halign(Gtk.Align.START)
+		self.gridMain.attach(self.lbMain,1,1,9,9)
 		self.update_lb()
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
-		self.btnUp = Gtk.Button()
-		self.add(self.btnUp)
+		self.btnUp = Gtk.Button("Up")
+		self.gridMain.attach(self.btnUp,1,10,1,1)
 
 	def on_lb_row_activated(self, listbox, listboxrow):
 		i = listboxrow.get_index()
