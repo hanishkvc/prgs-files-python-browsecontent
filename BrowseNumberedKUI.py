@@ -144,9 +144,10 @@ class MainWin(Gtk.ApplicationWindow):
 				self.curFileList.append(cur)
 			else:
 				continue
-		# Remove unwanted files
+		# Remove unwanted files and sort
 		newFileList = filter(lambda x: False if x.endswith('srt') else True, self.curFileList)
-		self.curFileList = newFileList
+		self.curFileList = list(newFileList)
+		self.curFileList.sort()
 		# Add things to listbox
 		for cur in self.curDirList:
 			lbl = Gtk.Label(label="dir:%s"%(cur))
