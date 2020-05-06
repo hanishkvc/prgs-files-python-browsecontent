@@ -27,6 +27,7 @@ class MainWin(Gtk.ApplicationWindow):
 	def build_ui(self):
 		self.lbMain = Gtk.ListBox()
 		self.add(self.lbMain)
+		#self.lbMain.set_halign(Gtk.Align.START)
 		self.update_lb()
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
 
@@ -55,9 +56,11 @@ class MainWin(Gtk.ApplicationWindow):
 				continue
 		for cur in self.curDirList:
 			lbl = Gtk.Label("dir:%s"%(cur))
+			lbl.set_halign(Gtk.Align.START)
 			self.lbMain.add(lbl)
 		for cur in self.curFileList:
 			lbl = Gtk.Label("file:%s"%(cur))
+			lbl.set_halign(Gtk.Align.START)
 			self.lbMain.add(lbl)
 
 
