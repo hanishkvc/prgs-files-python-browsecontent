@@ -34,8 +34,8 @@ class MainWin(Gtk.ApplicationWindow):
 		self.scrHeight = height
 		self.set_default_size(self.scrWidth, self.scrHeight)
 		self.set_position(Gtk.WindowPosition.CENTER)
-		self.basePath = basePath
-		self.curPath = basePath
+		self.basePath = os.path.abspath(basePath)
+		self.curPath = self.basePath
 		self.build_ui()
 
 	def build_ui(self):
@@ -61,9 +61,12 @@ class MainWin(Gtk.ApplicationWindow):
 		self.swWV.add(self.wvMain)
 		self.gridMain.attach(self.swWV,5,1,8,9)
 		# Add the buttons
+		self.btnBase = Gtk.Button(label="Base")
+		self.btnBase.connect("clicked", self.on_btn_clicked)
+		self.gridMain.attach(self.btnBase,1,10,1,1)
 		self.btnUp = Gtk.Button(label="Up")
 		self.btnUp.connect("clicked", self.on_btn_clicked)
-		self.gridMain.attach(self.btnUp,1,10,1,1)
+		self.gridMain.attach(self.btnUp,6,10,1,1)
 		self.btnPrev = Gtk.Button(label="Prev")
 		self.btnPrev.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnPrev,7,10,1,1)
@@ -109,9 +112,12 @@ class MainWin(Gtk.ApplicationWindow):
 		if sCurRow != None:
 			print(sCurRow)
 
-	def lb_play(self, theLB):
-		rowSel = theLB.get_selected_row()
-		sContent = rowSel.get_child().get_text()
+	def lb_play(self, theLB, thePath=None):
+		if thePath == None:
+			rowSel = theLB.get_selected_row()
+			sContent = rowSel.get_child().get_text()
+		else:
+			sContent = thePath
 		[sType, sPath] = sContent.split(':',1)
 		print(sType, sPath)
 		thePath = os.path.join(self.curPath, sPath)
@@ -133,7 +139,10 @@ class MainWin(Gtk.ApplicationWindow):
 			print("INFO:lb_up: Already reached top")
 
 	def on_btn_clicked(self, button):
-		if button == self.btnUp:
+		if button == self.btnBase:
+			dprint("INFO:btn_clicked: Base")
+			self.lb_play(self.lbMain, "dir:%s"%(self.basePath))
+		elif button == self.btnUp:
 			dprint("INFO:btn_clicked: Up")
 			self.lb_up(self.lbMain)
 		elif button == self.btnPrev:
