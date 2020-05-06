@@ -44,15 +44,36 @@ class MainWin(Gtk.ApplicationWindow):
 		self.btnNext.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnNext,9,10,1,1)
 
+	def lb_select(self, mode="next"):
+		rowSel = self.lbMain.get_selected_row()
+		rowPrev = None
+		rowNext = None
+		bFound = False
+		for row in self.lbMain:
+			if row == rowSel:
+				bFound = True
+			else:
+				if bFound:
+					rowNext = row
+					break
+			if not bFound:
+				rowPrev = row
+		if mode=="next":
+			self.lbMain.select_row(rowNext)
+		if mode=="prev":
+			self.lbMain.select_row(rowPrev)
+
 	def on_btn_clicked(self, button):
 		if button == self.btnUp:
 			print("INFO:btn_clicked: Up")
 		elif button == self.btnPrev:
 			print("INFO:btn_clicked: Prev")
+			self.lb_select(mode="prev")
 		elif button == self.btnPlay:
 			print("INFO:btn_clicked: Play")
 		elif button == self.btnNext:
 			print("INFO:btn_clicked: Next")
+			self.lb_select(mode="next")
 
 	def on_lb_row_activated(self, listbox, listboxrow):
 		i = listboxrow.get_index()
