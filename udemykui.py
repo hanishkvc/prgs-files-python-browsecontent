@@ -30,6 +30,8 @@ class MainWin(Gtk.ApplicationWindow):
 		#self.lbMain.set_halign(Gtk.Align.START)
 		self.update_lb()
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
+		self.btnUp = Gtk.Button()
+		self.add(self.btnUp)
 
 	def on_lb_row_activated(self, listbox, listboxrow):
 		i = listboxrow.get_index()
