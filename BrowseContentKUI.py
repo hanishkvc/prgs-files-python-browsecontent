@@ -54,6 +54,9 @@ class MainWin(Gtk.ApplicationWindow):
 		self.gridMain.attach(self.swLB,1,1,4,9)
 		self.update_lb()
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
+		# Added a separator
+		self.vSep = Gtk.VSeparator()
+		self.gridMain.attach(self.vSep,5,2,1,7)
 		# Add a WebView
 		self.wvMain = WebKit2.WebView()
 		self.wvMain.load_html("<html> <head><title> Browser </title></head> <body> <center> Satyameva Jayate </center> </body> </html>")
@@ -61,7 +64,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.swWV.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 		self.swWV.set_min_content_width(self.scrWidth*0.65)
 		self.swWV.add(self.wvMain)
-		self.gridMain.attach(self.swWV,5,1,8,9)
+		self.gridMain.attach(self.swWV,6,1,9,9)
 		# Add the buttons
 		self.btnBase = Gtk.Button(label="Base")
 		self.btnBase.connect("clicked", self.on_btn_clicked)
@@ -199,6 +202,7 @@ class MainWin(Gtk.ApplicationWindow):
 			lbl = Gtk.Label(label="file:%s"%(cur))
 			lbl.set_halign(Gtk.Align.START)
 			self.lbMain.add(lbl)
+		self.lbMain.set_size_request(self.scrWidth*0.25,self.scrHeight*0.9)
 
 
 class BrowseContentKUI(Gtk.Application):
