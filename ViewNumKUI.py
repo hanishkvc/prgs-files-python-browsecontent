@@ -48,8 +48,11 @@ class MainWin(Gtk.ApplicationWindow):
 		rowSel = theLB.get_selected_row()
 		rowPrev = None
 		rowNext = None
+		rowFirst = None
 		bFound = False
 		for row in theLB:
+			if rowFirst == None:
+				rowFirst = row
 			if row == rowSel:
 				bFound = True
 			else:
@@ -58,6 +61,10 @@ class MainWin(Gtk.ApplicationWindow):
 					break
 			if not bFound:
 				rowPrev = row
+		if rowNext == None:
+			rowNext = rowFirst
+		if rowPrev == None:
+			rowPrev = rowFirst
 		if mode=="next":
 			theLB.select_row(rowNext)
 		if mode=="prev":
