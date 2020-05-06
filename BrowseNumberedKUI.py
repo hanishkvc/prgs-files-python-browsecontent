@@ -12,8 +12,8 @@ import os
 
 
 APPNAME = "BrowseNumberedKUI"
-DEFAULT_WIDTH = 640
-DEFAULT_HEIGHT = 480
+DEFAULT_WIDTH = 800
+DEFAULT_HEIGHT = 600
 
 
 GDEBUGLEVEL = 10
@@ -54,7 +54,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
 		# Add a WebView
 		self.wvMain = WebKit2.WebView()
-		self.wvMain.load_html("<html> <head><title> Browser </title></head> <body> Satyameva Jayate </body> </html>")
+		self.wvMain.load_html("<html> <head><title> Browser </title></head> <body> <center> Satyameva Jayate </center> </body> </html>")
 		self.swWV = Gtk.ScrolledWindow()
 		self.swWV.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 		self.swWV.set_min_content_width(self.scrWidth*0.7)
