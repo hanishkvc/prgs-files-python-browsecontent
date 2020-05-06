@@ -33,6 +33,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.swMain.set_min_content_height(DEFAULT_HEIGHT*0.9)
 		self.swMain.set_max_content_height(DEFAULT_HEIGHT*0.9)
 		self.lbMain = Gtk.ListBox()
+		#self.swMain.add_with_viewport(self.lbMain)
 		self.swMain.add(self.lbMain)
 		self.gridMain.attach(self.swMain,1,1,9,9)
 		self.update_lb()
