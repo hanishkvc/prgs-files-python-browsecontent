@@ -33,12 +33,22 @@ class MainWin(Gtk.ApplicationWindow):
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
 		self.btnUp = Gtk.Button(label="Up")
 		self.gridMain.attach(self.btnUp,1,10,1,1)
-		self.btnUp = Gtk.Button(label="Prev")
-		self.gridMain.attach(self.btnUp,7,10,1,1)
-		self.btnUp = Gtk.Button(label="Play")
-		self.gridMain.attach(self.btnUp,8,10,1,1)
-		self.btnUp = Gtk.Button(label="Next")
-		self.gridMain.attach(self.btnUp,9,10,1,1)
+		self.btnPrev = Gtk.Button(label="Prev")
+		self.gridMain.attach(self.btnPrev,7,10,1,1)
+		self.btnPlay = Gtk.Button(label="Play")
+		self.gridMain.attach(self.btnPlay,8,10,1,1)
+		self.btnNext = Gtk.Button(label="Next")
+		self.gridMain.attach(self.btnNext,9,10,1,1)
+
+	def on_btn_clicked(self, button, userdata):
+		if button == self.btnUp:
+			print("INFO:btn_clicked: Up")
+		elif button == self.btnPrev:
+			print("INFO:btn_clicked: Prev")
+		elif button == self.btnPlay:
+			print("INFO:btn_clicked: Play")
+		elif button == self.btnNext:
+			print("INFO:btn_clicked: Next")
 
 	def on_lb_row_activated(self, listbox, listboxrow):
 		i = listboxrow.get_index()
