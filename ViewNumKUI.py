@@ -27,10 +27,15 @@ class MainWin(Gtk.ApplicationWindow):
 	def build_ui(self):
 		self.gridMain = Gtk.Grid()
 		self.add(self.gridMain)
+		# Add the listbox in a scrolled window
+		self.swMain = Gtk.ScrolledWindow()
+		self.swMain.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
 		self.lbMain = Gtk.ListBox()
-		self.gridMain.attach(self.lbMain,1,1,9,9)
+		self.swMain.add(self.lbMain)
+		self.gridMain.attach(self.swMain,1,1,9,9)
 		self.update_lb()
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
+		# Add the buttons
 		self.btnUp = Gtk.Button(label="Up")
 		self.btnUp.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnUp,1,10,1,1)
