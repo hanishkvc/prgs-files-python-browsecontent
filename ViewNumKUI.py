@@ -92,9 +92,19 @@ class MainWin(Gtk.ApplicationWindow):
 			self.update_lb()
 			self.show_all()
 
+	def lb_up(self, theLB):
+		newPath = self.curPath.rsplit('/',1)[0]
+		if newPath != self.curPath:
+			self.curPath = newPath
+			self.update_lb()
+			self.show_all()
+		else:
+			print("INFO:lb_up: Already reached top")
+
 	def on_btn_clicked(self, button):
 		if button == self.btnUp:
 			print("INFO:btn_clicked: Up")
+			self.lb_up(self.lbMain)
 		elif button == self.btnPrev:
 			print("INFO:btn_clicked: Prev")
 			self.lb_select(self.lbMain, mode="prev")
