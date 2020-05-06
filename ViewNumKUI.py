@@ -31,7 +31,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.gridMain.attach(self.lbMain,1,1,9,9)
 		self.update_lb()
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
-		self.btnUp = Gtk.Button("Up")
+		self.btnUp = Gtk.Button(label="Up")
 		self.gridMain.attach(self.btnUp,1,10,1,1)
 
 	def on_lb_row_activated(self, listbox, listboxrow):
@@ -58,11 +58,11 @@ class MainWin(Gtk.ApplicationWindow):
 			else:
 				continue
 		for cur in self.curDirList:
-			lbl = Gtk.Label("dir:%s"%(cur))
+			lbl = Gtk.Label(label="dir:%s"%(cur))
 			lbl.set_halign(Gtk.Align.START)
 			self.lbMain.add(lbl)
 		for cur in self.curFileList:
-			lbl = Gtk.Label("file:%s"%(cur))
+			lbl = Gtk.Label(label="file:%s"%(cur))
 			lbl.set_halign(Gtk.Align.START)
 			self.lbMain.add(lbl)
 
