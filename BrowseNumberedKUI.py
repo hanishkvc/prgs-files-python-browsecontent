@@ -132,6 +132,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.clear_lb()
 		if path == None:
 			path = self.curPath
+		# Get list of current path contents
 		dirContents = os.listdir(path)
 		self.curDirList = []
 		self.curFileList = []
@@ -143,6 +144,10 @@ class MainWin(Gtk.ApplicationWindow):
 				self.curFileList.append(cur)
 			else:
 				continue
+		# Remove unwanted files
+		newFileList = filter(lambda x: if x.endswith('srt'): return False, self.curFileList)
+		self.curFileList = newFileList
+		# Add things to listbox
 		for cur in self.curDirList:
 			lbl = Gtk.Label(label="dir:%s"%(cur))
 			lbl.set_halign(Gtk.Align.START)
