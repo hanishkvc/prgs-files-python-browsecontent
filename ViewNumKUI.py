@@ -32,15 +32,19 @@ class MainWin(Gtk.ApplicationWindow):
 		self.update_lb()
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
 		self.btnUp = Gtk.Button(label="Up")
+		self.btnUp.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnUp,1,10,1,1)
 		self.btnPrev = Gtk.Button(label="Prev")
+		self.btnPrev.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnPrev,7,10,1,1)
 		self.btnPlay = Gtk.Button(label="Play")
+		self.btnPlay.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnPlay,8,10,1,1)
 		self.btnNext = Gtk.Button(label="Next")
+		self.btnNext.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnNext,9,10,1,1)
 
-	def on_btn_clicked(self, button, userdata):
+	def on_btn_clicked(self, button):
 		if button == self.btnUp:
 			print("INFO:btn_clicked: Up")
 		elif button == self.btnPrev:
