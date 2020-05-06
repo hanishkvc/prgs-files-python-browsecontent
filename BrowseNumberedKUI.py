@@ -104,10 +104,14 @@ class MainWin(Gtk.ApplicationWindow):
 		sContent = rowSel.get_child().get_text()
 		[sType, sPath] = sContent.split(':',1)
 		print(sType, sPath)
+		thePath = os.path.join(self.curPath, sPath)
 		if sType == "dir":
-			self.curPath = os.path.join(self.curPath, sPath)
+			self.curPath = thePath
 			self.update_lb()
-			self.show_all()
+		elif sType == "file":
+			#self.wvMain.load_uri(thePath)
+			self.wvMain.load_uri("file:///tmp/test1.html")
+		self.show_all()
 
 	def lb_up(self, theLB):
 		newPath = self.curPath.rsplit('/',1)[0]
