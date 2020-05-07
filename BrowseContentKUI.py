@@ -221,14 +221,19 @@ class MainWin(Gtk.ApplicationWindow):
 
 	def save_config(self):
 		f = open(self.config_file(), mode="w+")
-		f.write("lastPath:%s"%(self.lastFile.replace(self.basePath,"",1)))
+		f.write("lastFile:%s"%(self.lastFile.replace(self.basePath,"",1)))
 		f.close()
 
 	def load_config(self):
-		f = open(self.config_file())
-		l = f.readline()
-		self.curPath = l.replace("lastPath:","",1)
-		f.close()
+		try:
+			f = open(self.config_file())
+			l = f.readline()
+			print("INFO:load_config:basePath:%s"%(self.basePath))
+			self.curPath = os.path.join(self.basePath, os.path.dirname(l.replace("lastFile:","",1)))
+			print("INFO:load_config:curPath:%s"%(self.curPath))
+			f.close()
+		except FileNotFoundError:
+			print("WARN:load_config: No config file found at %s"%(self.basePath))
 
 
 
