@@ -12,15 +12,18 @@ import sys
 import os
 
 
+
 APPNAME = "BrowseContentKUI"
 DEFAULT_WIDTH = 800
 DEFAULT_HEIGHT = 600
+
 
 
 GDEBUGLEVEL = 10
 def dprint(sMsg, dbgLvl=GDEBUGLEVEL):
 	if dbgLvl < GDEBUGLEVEL:
 		print(sMsg)
+
 
 
 class MainWin(Gtk.ApplicationWindow):
@@ -212,6 +215,12 @@ class MainWin(Gtk.ApplicationWindow):
 			self.lbMain.add(lbl)
 		self.lbMain.set_size_request(self.scrWidth*0.25,self.scrHeight*0.9)
 
+	def save_config(self):
+		f = open("%s/.browsecontent.cfg"%(self.basePath), mode="w+")
+		f.write("lastPath:%s"%(self.lastFile.replace(self.basePath,"",1)))
+		f.close()
+
+
 
 class BrowseContentKUI(Gtk.Application):
 	wMain = None
@@ -225,11 +234,13 @@ class BrowseContentKUI(Gtk.Application):
 		self.wMain.show_all()
 
 
+
 if __name__ == '__main__':
 	sPath = "."
 	if len(sys.argv) > 1:
 		sPath = sys.argv[1]
 	app = BrowseContentKUI(sPath)
 	exitStatus = app.run()
+	app.wMain.save_config()
 	sys.exit(exitStatus)
 
