@@ -40,6 +40,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.set_position(Gtk.WindowPosition.CENTER)
 		self.basePath = os.path.abspath(basePath)
 		self.curPath = self.basePath
+		self.load_config()
 		self.build_ui()
 
 	def build_ui(self):
@@ -215,9 +216,18 @@ class MainWin(Gtk.ApplicationWindow):
 			self.lbMain.add(lbl)
 		self.lbMain.set_size_request(self.scrWidth*0.25,self.scrHeight*0.9)
 
+	def config_file(self):
+		return "%s/.browsecontent.cfg"%(self.basePath)
+
 	def save_config(self):
-		f = open("%s/.browsecontent.cfg"%(self.basePath), mode="w+")
+		f = open(self.config_file(), mode="w+")
 		f.write("lastPath:%s"%(self.lastFile.replace(self.basePath,"",1)))
+		f.close()
+
+	def load_config(self):
+		f = open(self.config_file())
+		l = f.readline()
+		self.curPath = l.replace("lastPath:","",1)
 		f.close()
 
 
