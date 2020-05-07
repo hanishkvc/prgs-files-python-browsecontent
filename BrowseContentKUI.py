@@ -221,7 +221,10 @@ class MainWin(Gtk.ApplicationWindow):
 
 	def save_config(self):
 		f = open(self.config_file(), mode="w+")
-		f.write("lastFile:%s"%(self.lastFile.replace(self.basePath,"",1)))
+		theLastFile = self.lastFile.replace(self.basePath,"",1)
+		if theLastFile.startswith("/"):
+			theLastFile = theLastFile[1:]
+		f.write("lastFile:%s"%(theLastFile))
 		f.close()
 
 	def load_config(self):
