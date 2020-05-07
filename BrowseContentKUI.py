@@ -231,8 +231,11 @@ class MainWin(Gtk.ApplicationWindow):
 		try:
 			f = open(self.config_file())
 			l = f.readline()
+			theLastFile = l.replace("lastFile:","",1)
 			print("INFO:load_config:basePath:%s"%(self.basePath))
-			self.curPath = os.path.join(self.basePath, os.path.dirname(l.replace("lastFile:","",1)))
+			self.lastFile = os.path.join(self.basePath, theLastFile)
+			#self.curPath = os.path.dirname(self.lastFile) , should also work
+			self.curPath = os.path.join(self.basePath, os.path.dirname(theLastFile))
 			print("INFO:load_config:curPath:%s"%(self.curPath))
 			f.close()
 		except FileNotFoundError:
