@@ -58,6 +58,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.gridMain.attach(self.swLB,1,1,4,9)
 		self.update_lb()
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
+		self.lbMain.connect("button-release-event", self.on_lb_button_release)
 		# Added a separator
 		self.vSep = Gtk.VSeparator()
 		self.gridMain.attach(self.vSep,5,2,1,7)
@@ -180,6 +181,11 @@ class MainWin(Gtk.ApplicationWindow):
 			print("File: {}".format(self.curFileList[i-numDirs]))
 		else:
 			print("Dir: {}".format(self.curDirList[i]))
+		#self.lb_play(self.lbMain)
+
+	def on_lb_button_release(self, listbox, event):
+		print("INFO: button released wrt lb")
+		return False
 
 	def clear_lb(self):
 		for i in self.lbMain:
