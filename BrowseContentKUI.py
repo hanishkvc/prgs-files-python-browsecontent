@@ -44,7 +44,11 @@ class MainWin(Gtk.ApplicationWindow):
 		self.load_config()
 		self.prevClickTime = 0
 		self.rowActTime = -1
+		self.connect("check-resize", self.on_check_resize)
 		self.build_ui()
+
+	def on_check_resize(self, container):
+		print("INFO:AppWin:CheckResize:{}".format(self.get_size()))
 
 	def build_ui(self):
 		self.gridMain = Gtk.Grid()
@@ -268,7 +272,8 @@ class BrowseContentKUI(Gtk.Application):
 		self.basePath = basePath
 
 	def do_activate(self):
-		self.wMain = MainWin(self, self.basePath, None, None)
+		#self.wMain = MainWin(self, self.basePath, None, None)
+		self.wMain = MainWin(self, self.basePath)
 		self.wMain.show_all()
 
 
