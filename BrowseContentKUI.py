@@ -49,10 +49,16 @@ class MainWin(Gtk.ApplicationWindow):
 		self.do_resize()
 
 	def do_resize(self):
-		self.swLB.set_min_content_width(self.scrWidth*0.25)
-		self.swLB.set_min_content_height(self.scrHeight*0.9)
-		self.swLB.set_max_content_height(self.scrHeight*0.9)
-		self.swWV.set_min_content_width(self.scrWidth*0.65)
+		swLBWidth = self.scrWidth*0.28
+		swLBHeight = self.scrHeight*0.9
+		swWVWidth = self.scrWidth*0.68
+		swWVHeight = swLBHeight
+		self.swLB.set_min_content_width(swLBWidth)
+		self.swLB.set_min_content_height(swLBHeight)
+		self.swLB.set_max_content_height(swLBHeight)
+		self.swWV.set_min_content_width(swWVWidth)
+		self.swLB.set_size_request(swLBWidth, swLBHeight)
+		self.swWV.set_size_request(swWVWidth, swWVHeight)
 
 	def on_check_resize(self, container):
 		(newWidth, newHeight) = self.get_size()
