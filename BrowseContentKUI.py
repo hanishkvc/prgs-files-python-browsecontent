@@ -17,6 +17,7 @@ import time
 APPNAME = "BrowseContentKUI"
 DEFAULT_WIDTH = 800
 DEFAULT_HEIGHT = 600
+bResizeBothWays = True
 
 
 
@@ -53,10 +54,11 @@ class MainWin(Gtk.ApplicationWindow):
 		swLBHeight = self.scrHeight*0.9
 		swWVWidth = self.scrWidth*0.68
 		swWVHeight = swLBHeight
-		#self.swLB.set_min_content_width(swLBWidth)
-		#self.swLB.set_min_content_height(swLBHeight)
-		#self.swLB.set_max_content_height(swLBHeight)
-		#self.swWV.set_min_content_width(swWVWidth)
+		if not bResizeBothWays:
+			self.swLB.set_min_content_width(swLBWidth)
+			self.swLB.set_min_content_height(swLBHeight)
+			self.swLB.set_max_content_height(swLBHeight)
+			self.swWV.set_min_content_width(swWVWidth)
 		self.swLB.set_size_request(swLBWidth, swLBHeight)
 		self.swWV.set_size_request(swWVWidth, swWVHeight)
 
