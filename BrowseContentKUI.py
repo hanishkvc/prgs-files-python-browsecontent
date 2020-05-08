@@ -10,6 +10,7 @@ gi.require_version('WebKit2', '4.0')
 from gi.repository import WebKit2
 import sys
 import os
+import time
 
 
 
@@ -41,6 +42,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.basePath = os.path.abspath(basePath)
 		self.curPath = self.basePath
 		self.load_config()
+		self.prevClickTime = 0
 		self.build_ui()
 
 	def build_ui(self):
@@ -181,10 +183,14 @@ class MainWin(Gtk.ApplicationWindow):
 			print("File: {}".format(self.curFileList[i-numDirs]))
 		else:
 			print("Dir: {}".format(self.curDirList[i]))
-		#self.lb_play(self.lbMain)
 
 	def on_lb_button_release(self, listbox, event):
-		print("INFO: button released wrt lb")
+		curTime = time.time()
+		diffTime = curTime - self.prevClickTime
+		self.prevClickTime = curTime
+		if diffTime < 0.5:
+			print("INFO: mouse button double clicked")
+			self.lb_play(self.lbMain)
 		return False
 
 	def clear_lb(self):
