@@ -46,9 +46,22 @@ class MainWin(Gtk.ApplicationWindow):
 		self.rowActTime = -1
 		self.connect("check-resize", self.on_check_resize)
 		self.build_ui()
+		self.do_resize()
+
+	def do_resize(self):
+		self.swLB.set_min_content_width(self.scrWidth*0.25)
+		self.swLB.set_min_content_height(self.scrHeight*0.9)
+		self.swLB.set_max_content_height(self.scrHeight*0.9)
+		self.swWV.set_min_content_width(self.scrWidth*0.65)
 
 	def on_check_resize(self, container):
+		(newWidth, newHeight) = self.get_size()
+		if (newWidth < self.scrWidth+10) and (newHeight < self.scrHeight+10):
+			return
 		print("INFO:AppWin:CheckResize:{}".format(self.get_size()))
+		self.scrWidth = newWidth
+		self.scrHeight = newHeight
+		self.do_resize()
 
 	def build_ui(self):
 		self.gridMain = Gtk.Grid()
@@ -56,9 +69,6 @@ class MainWin(Gtk.ApplicationWindow):
 		# Add the listbox in a scrolled window
 		self.swLB = Gtk.ScrolledWindow()
 		self.swLB.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-		self.swLB.set_min_content_width(self.scrWidth*0.25)
-		self.swLB.set_min_content_height(self.scrHeight*0.9)
-		self.swLB.set_max_content_height(self.scrHeight*0.9)
 		self.lbMain = Gtk.ListBox()
 		#self.swLB.add_with_viewport(self.lbMain)
 		self.swLB.add(self.lbMain)
@@ -74,7 +84,6 @@ class MainWin(Gtk.ApplicationWindow):
 		self.wvMain.load_html("<html> <head><title> Browser </title></head> <body> <center> Satyameva Jayate </center> </body> </html>")
 		self.swWV = Gtk.ScrolledWindow()
 		self.swWV.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-		self.swWV.set_min_content_width(self.scrWidth*0.65)
 		self.swWV.add(self.wvMain)
 		self.gridMain.attach(self.swWV,6,1,9,9)
 		# Add the buttons
