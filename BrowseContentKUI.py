@@ -53,16 +53,17 @@ class MainWin(Gtk.ApplicationWindow):
 		swLBHeight = self.scrHeight*0.9
 		swWVWidth = self.scrWidth*0.68
 		swWVHeight = swLBHeight
-		self.swLB.set_min_content_width(swLBWidth)
-		self.swLB.set_min_content_height(swLBHeight)
-		self.swLB.set_max_content_height(swLBHeight)
-		self.swWV.set_min_content_width(swWVWidth)
+		#self.swLB.set_min_content_width(swLBWidth)
+		#self.swLB.set_min_content_height(swLBHeight)
+		#self.swLB.set_max_content_height(swLBHeight)
+		#self.swWV.set_min_content_width(swWVWidth)
 		self.swLB.set_size_request(swLBWidth, swLBHeight)
 		self.swWV.set_size_request(swWVWidth, swWVHeight)
 
 	def on_check_resize(self, container):
 		(newWidth, newHeight) = self.get_size()
-		if (newWidth < self.scrWidth+10) and (newHeight < self.scrHeight+10):
+		#if (newWidth < self.scrWidth+10) and (newHeight < self.scrHeight+10):
+		if (newWidth == self.scrWidth) and (newHeight == self.scrHeight):
 			return
 		print("INFO:AppWin:CheckResize:{}".format(self.get_size()))
 		self.scrWidth = newWidth
