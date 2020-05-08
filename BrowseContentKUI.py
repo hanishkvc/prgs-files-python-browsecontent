@@ -43,6 +43,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.curPath = self.basePath
 		self.load_config()
 		self.prevClickTime = 0
+		self.rowActTime = -1
 		self.build_ui()
 
 	def build_ui(self):
@@ -179,6 +180,7 @@ class MainWin(Gtk.ApplicationWindow):
 		i = listboxrow.get_index()
 		numDirs = len(self.curDirList)
 		numFiles = len(self.curFileList)
+		self.rowActTime = time.time()
 		if i >= numDirs:
 			print("File: {}".format(self.curFileList[i-numDirs]))
 		else:
@@ -187,10 +189,13 @@ class MainWin(Gtk.ApplicationWindow):
 	def on_lb_button_release(self, listbox, event):
 		curTime = time.time()
 		diffTime = curTime - self.prevClickTime
-		self.prevClickTime = curTime
 		if diffTime < 0.5:
-			print("INFO: mouse button double clicked")
-			self.lb_play(self.lbMain)
+			print("INFO:btn_rel: mouse button double clicked")
+			if self.rowActTime > self.prevClickTime:
+				self.lb_play(self.lbMain)
+			else:
+				print("WARN:btn_rel: Need to click on a valid row")
+		self.prevClickTime = curTime
 		return False
 
 	def clear_lb(self):
