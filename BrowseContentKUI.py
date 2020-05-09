@@ -45,11 +45,11 @@ class MainWin(Gtk.ApplicationWindow):
 		Gtk.Window.__init__(self, title=sTitle, application=app)
 		if width == None:
 			width = self.get_screen().width()
-		self.scrWidth = width
+		self.appWidth = width
 		if height == None:
 			height = self.get_screen().height()
-		self.scrHeight = height
-		self.set_default_size(self.scrWidth, self.scrHeight)
+		self.appHeight = height
+		self.set_default_size(self.appWidth, self.appHeight)
 		self.set_position(Gtk.WindowPosition.CENTER)
 		self.basePath = os.path.abspath(basePath)
 		self.curPath = self.basePath
@@ -92,11 +92,11 @@ class MainWin(Gtk.ApplicationWindow):
 		self.do_resize()
 
 	def do_resize(self):
-		#heightRatio = 1-(64/self.scrHeight)
-		heightRatio = 1-((self.btnHeight+8)/self.scrHeight)
-		swLBWidth = self.scrWidth*self.lbWidthRatio
-		swLBHeight = self.scrHeight*heightRatio
-		swWVWidth = self.scrWidth*(1-self.lbWidthRatio-0.02)
+		#heightRatio = 1-(64/self.appHeight)
+		heightRatio = 1-((self.btnHeight+8)/self.appHeight)
+		swLBWidth = self.appWidth*self.lbWidthRatio
+		swLBHeight = self.appHeight*heightRatio
+		swWVWidth = self.appWidth*(1-self.lbWidthRatio-0.02)
 		swWVHeight = swLBHeight
 		if not bResizeBothWays:
 			self.swLB.set_min_content_width(swLBWidth)
@@ -108,12 +108,12 @@ class MainWin(Gtk.ApplicationWindow):
 
 	def on_check_resize(self, container):
 		(newWidth, newHeight) = self.get_size()
-		#if (newWidth < self.scrWidth+10) and (newHeight < self.scrHeight+10):
-		if (newWidth == self.scrWidth) and (newHeight == self.scrHeight):
+		#if (newWidth < self.appWidth+10) and (newHeight < self.appHeight+10):
+		if (newWidth == self.appWidth) and (newHeight == self.appHeight):
 			return
 		print("INFO:AppWin:CheckResize:{}".format(self.get_size()))
-		self.scrWidth = newWidth
-		self.scrHeight = newHeight
+		self.appWidth = newWidth
+		self.appHeight = newHeight
 		self.do_resize()
 
 	def build_ui(self):
@@ -361,7 +361,7 @@ class MainWin(Gtk.ApplicationWindow):
 			lbl = Gtk.Label(label="file:%s"%(cur))
 			lbl.set_halign(Gtk.Align.START)
 			self.lbMain.add(lbl)
-		self.lbMain.set_size_request(self.scrWidth*0.25,self.scrHeight*0.9)
+		self.lbMain.set_size_request(self.appWidth*self.lbWidthRatio,self.appHeight*0.9)
 
 	def config_file(self):
 		return "%s/.browsecontent.cfg"%(self.basePath)
