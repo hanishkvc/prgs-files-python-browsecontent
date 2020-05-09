@@ -57,9 +57,16 @@ class MainWin(Gtk.ApplicationWindow):
 	def __get_title(self, basePath):
 		sTitle = ""
 		sPath = basePath
-		while (len(sTitle) < 64) and (len(sPath) > 0):
+		iParts = 0
+		while (len(sTitle) < 64) and (len(sPath) > 0) and (iParts < 16):
+			iParts += 1
 			sCur = os.path.basename(sPath)
 			sPath = os.path.dirname(sPath)
+			# if path ends with path separator, then basename of "" needs skipping
+			if sCur == "":
+				continue
+			if sPath == os.path.sep:
+				break
 			sTitle = "/%s/%s"%(sCur,sTitle)
 		return sTitle
 
