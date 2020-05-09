@@ -193,7 +193,11 @@ class MainWin(Gtk.ApplicationWindow):
 
 	def lb_select_fromtext(self, theLB, selText):
 		for row in theLB:
-			if row.get_child().get_text() == selText:
+			curText = row.get_child().get_text()
+			curText = curText.replace("dir:","",1)
+			dprint("DBUG:lb_sel_fromtext:%s,%s"%(curText, selText))
+			if curText == selText:
+				theLB.select_row(row)
 				theLB.set_focus_child(row)
 				row.get_child().grab_focus()
 				break
