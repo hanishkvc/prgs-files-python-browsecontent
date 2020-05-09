@@ -8,6 +8,8 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
 gi.require_version('WebKit2', '4.0')
 from gi.repository import WebKit2
+gi.require_version('EvinceView', '3.0')
+gi.require_version('EvinceDocument', '3.0')
 from gi.repository import EvinceDocument, EvinceView
 import sys
 import os
