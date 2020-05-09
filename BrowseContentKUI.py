@@ -8,6 +8,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
 gi.require_version('WebKit2', '4.0')
 from gi.repository import WebKit2
+from gi.repository import EvinceDocument, EvinceView
 import sys
 import os
 import time
@@ -131,6 +132,8 @@ class MainWin(Gtk.ApplicationWindow):
 		self.swWV.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 		self.swWV.add(self.wvMain)
 		self.gridMain.attach(self.swWV,6,1,9,9)
+		# Add EvinceView
+		self.evMain = EvinceView.View()
 		# Add the buttons
 		self.btnBase = Gtk.Button(label="Base")
 		self.btnBase.connect("clicked", self.on_btn_clicked)
@@ -187,7 +190,17 @@ class MainWin(Gtk.ApplicationWindow):
 			print(sCurRow)
 
 	def play_internal(self, theFile):
-		self.wvMain.load_uri("file:///%s"%(os.path.abspath(theFile)))
+		theFile = "file:///%s"%(os.path.abspath(theFile))
+		if self.wvMain.get_parent() != None:
+			self.wvMain.stop_loading()
+			self.swWV.remove(self.wvMain)
+		if self.evMain.get_parent() != None:
+			self.swWV.remove(self.evMain)
+		if theFile.lower().endswith(".pdf"):
+			self.swWV.add(self.evMain)
+		else:
+			self.swWV.add(self.wvMain)
+			self.wvMain.load_uri(theFile)
 
 	def play_external(self, theFile):
 		if bPlayGeneric:
