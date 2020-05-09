@@ -47,11 +47,21 @@ class MainWin(Gtk.ApplicationWindow):
 		self.rowActTime = -1
 		self.connect("check-resize", self.on_check_resize)
 		self.build_ui()
+		self.resize_setup()
+
+	def resize_setup(self):
+		(minHeight, self.btnHeight) = self.btnUp.get_preferred_height()
+		if minHeight > self.btnHeight:
+			self.btnHeight = minHeight
+		if self.btnHeight < 42:
+			self.btnHeight = 42
 		self.do_resize()
 
 	def do_resize(self):
+		#heightRatio = 1-(64/self.scrHeight)
+		heightRatio = 1-((self.btnHeight+8)/self.scrHeight)
 		swLBWidth = self.scrWidth*0.28
-		swLBHeight = self.scrHeight*0.9
+		swLBHeight = self.scrHeight*heightRatio
 		swWVWidth = self.scrWidth*0.68
 		swWVHeight = swLBHeight
 		if not bResizeBothWays:
