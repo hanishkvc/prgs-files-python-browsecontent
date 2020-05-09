@@ -297,8 +297,10 @@ class MainWin(Gtk.ApplicationWindow):
 			self.swLB.set_visible(not self.swLB.get_visible())
 			if self.swLB.get_visible():
 				self.lbWidthRatio = 0.28
+				self.btnHide.set_label("Hide")
 			else:
 				self.lbWidthRatio = 0.02
+				self.btnHide.set_label("UnHide")
 			self.do_resize()
 		elif button == self.btnUp:
 			dprint("INFO:btn_clicked: Up")
