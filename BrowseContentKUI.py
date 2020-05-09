@@ -18,6 +18,7 @@ APPNAME = "BrowseContentKUI"
 DEFAULT_WIDTH = 800
 DEFAULT_HEIGHT = 600
 bResizeBothWays = True
+bBasePathInTitle = True
 
 
 
@@ -31,7 +32,11 @@ def dprint(sMsg, dbgLvl=GDEBUGLEVEL):
 class MainWin(Gtk.ApplicationWindow):
 
 	def __init__(self, app, basePath=".", width=DEFAULT_WIDTH, height=DEFAULT_HEIGHT):
-		Gtk.Window.__init__(self, title=APPNAME, application=app)
+		sTitlePlus = ""
+		if bBasePathInTitle:
+			sTitlePlus = self.__get_title(basePath)
+		sTitle = "%s:%s"%(APPNAME, sTitlePlus)
+		Gtk.Window.__init__(self, title=sTitle, application=app)
 		if width == None:
 			width = self.get_screen().width()
 		self.scrWidth = width
@@ -48,6 +53,15 @@ class MainWin(Gtk.ApplicationWindow):
 		self.connect("check-resize", self.on_check_resize)
 		self.build_ui()
 		self.resize_setup()
+
+	def __get_title(self, basePath):
+		sTitle = ""
+		sPath = basePath
+		while (len(sTitle) < 64) and (len(sPath) > 0):
+			sCur = os.path.basename(sPath)
+			sPath = os.path.dirname(sPath)
+			sTitle = "/%s/%s"%(sCur,sTitle)
+		return sTitle
 
 	def resize_setup(self):
 		(minHeight, self.btnHeight) = self.btnUp.get_preferred_height()
