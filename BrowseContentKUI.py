@@ -58,6 +58,9 @@ class MainWin(Gtk.ApplicationWindow):
 		self.prevClickTime = 0
 		self.rowActTime = -1
 		self.connect("check-resize", self.on_check_resize)
+		# Required by build_ui->update_lb
+		self.lbWidthRatio = 0.28
+		self.mainHeightRatio = 0.9
 		self.build_ui()
 		self.resize_setup()
 		if self.lastFile != None:
@@ -88,14 +91,14 @@ class MainWin(Gtk.ApplicationWindow):
 			self.btnHeight = minHeight
 		if self.btnHeight < 42:
 			self.btnHeight = 42
+		#self.mainHeightRatio = 1-(64/self.appHeight)
+		self.mainHeightRatio = 1-((self.btnHeight+8)/self.appHeight)
 		self.lbWidthRatio = 0.28
 		self.do_resize()
 
 	def do_resize(self):
-		#heightRatio = 1-(64/self.appHeight)
-		heightRatio = 1-((self.btnHeight+8)/self.appHeight)
 		swLBWidth = self.appWidth*self.lbWidthRatio
-		swLBHeight = self.appHeight*heightRatio
+		swLBHeight = self.appHeight*self.mainHeightRatio
 		swWVWidth = self.appWidth*(1-self.lbWidthRatio-0.02)
 		swWVHeight = swLBHeight
 		if not bResizeBothWays:
@@ -361,7 +364,7 @@ class MainWin(Gtk.ApplicationWindow):
 			lbl = Gtk.Label(label="file:%s"%(cur))
 			lbl.set_halign(Gtk.Align.START)
 			self.lbMain.add(lbl)
-		self.lbMain.set_size_request(self.appWidth*self.lbWidthRatio,self.appHeight*0.9)
+		self.lbMain.set_size_request(self.appWidth*self.lbWidthRatio,self.appHeight*self.mainHeightRatio)
 
 	def config_file(self):
 		return "%s/.browsecontent.cfg"%(self.basePath)
