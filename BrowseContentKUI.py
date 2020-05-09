@@ -135,6 +135,10 @@ class MainWin(Gtk.ApplicationWindow):
 		# Add EvinceView
 		self.evMain = EvinceView.View()
 		EvinceDocument.init()
+		self.evDoc = EvinceDocument.Document()
+		self.evModel = EvinceView.DocumentModel()
+		self.evModel.set_document(self.evDoc)
+		self.evMain.set_model(self.evModel)
 		# Add the buttons
 		self.btnBase = Gtk.Button(label="Base")
 		self.btnBase.connect("clicked", self.on_btn_clicked)
@@ -199,10 +203,8 @@ class MainWin(Gtk.ApplicationWindow):
 		if self.evMain.get_parent() != None:
 			self.swWV.remove(self.evMain)
 		if theFile.lower().endswith(".pdf"):
-			self.evDoc = EvinceDocument.Document.factory_get_document(theFile)
-			self.evModel = EvinceView.DocumentModel()
-			self.evModel.set_document(self.evDoc)
-			self.evMain.set_model(self.evModel)
+			self.evModel.get_document().load(theFile)
+			self.evMain.reload()
 			self.swWV.add(self.evMain)
 		else:
 			self.swWV.add(self.wvMain)
