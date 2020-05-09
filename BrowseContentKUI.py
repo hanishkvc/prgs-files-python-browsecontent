@@ -88,14 +88,15 @@ class MainWin(Gtk.ApplicationWindow):
 			self.btnHeight = minHeight
 		if self.btnHeight < 42:
 			self.btnHeight = 42
+		self.lbWidthRatio = 0.28
 		self.do_resize()
 
 	def do_resize(self):
 		#heightRatio = 1-(64/self.scrHeight)
 		heightRatio = 1-((self.btnHeight+8)/self.scrHeight)
-		swLBWidth = self.scrWidth*0.29
+		swLBWidth = self.scrWidth*self.lbWidthRatio
 		swLBHeight = self.scrHeight*heightRatio
-		swWVWidth = self.scrWidth*0.69
+		swWVWidth = self.scrWidth*(1-self.lbWidthRatio-0.02)
 		swWVHeight = swLBHeight
 		if not bResizeBothWays:
 			self.swLB.set_min_content_width(swLBWidth)
@@ -149,6 +150,9 @@ class MainWin(Gtk.ApplicationWindow):
 		self.btnLast = Gtk.Button(label="Last")
 		self.btnLast.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnLast,2,10,1,1)
+		self.btnHide = Gtk.Button(label="Hide")
+		self.btnHide.connect("clicked", self.on_btn_clicked)
+		self.gridMain.attach(self.btnHide,3,10,1,1)
 		self.btnUp = Gtk.Button(label="Up")
 		self.btnUp.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnUp,6,10,1,1)
@@ -282,6 +286,13 @@ class MainWin(Gtk.ApplicationWindow):
 			theFile = os.path.basename(self.lastFile)
 			self.lb_play(self.lbMain, "dir:%s"%(thePath))
 			self.lb_select_fromtext(self.lbMain, "file:", theFile)
+		elif button == self.btnHide:
+			self.swLB.set_visible(not self.swLB.get_visible())
+			if self.swLB.get_visible():
+				self.lbWidthRatio = 0.28
+			else:
+				self.lbWidthRatio = 0.02
+			self.do_resize()
 		elif button == self.btnUp:
 			dprint("INFO:btn_clicked: Up")
 			self.lb_up(self.lbMain)
