@@ -283,25 +283,36 @@ class MainWin(Gtk.ApplicationWindow):
 		else:
 			print("INFO:lb_up: Already reached top")
 
+	def handle_lb_hideandseek(self, visible=None):
+		if visible == None:
+			self.swLB.set_visible(not self.swLB.get_visible())
+		else:
+			self.swLB.set_visible(visible)
+		if self.swLB.get_visible():
+			self.lbWidthRatio = 0.28
+			#self.btnUp.set_visible(True)
+		else:
+			self.lbWidthRatio = 0.02
+			#self.btnUp.set_visible(False)
+		self.do_resize()
+
 	def on_btn_clicked(self, button):
 		if button == self.btnBase:
 			dprint("INFO:btn_clicked: Base")
+			self.handle_lb_hideandseek(True)
 			self.lb_play(self.lbMain, "dir:%s"%(self.basePath))
 		elif button == self.btnLast:
 			dprint("INFO:btn_clicked: Last")
+			self.handle_lb_hideandseek(True)
 			thePath = os.path.dirname(self.lastFile)
 			theFile = os.path.basename(self.lastFile)
 			self.lb_play(self.lbMain, "dir:%s"%(thePath))
 			self.lb_select_fromtext(self.lbMain, "file:", theFile)
 		elif button == self.btnHide:
-			self.swLB.set_visible(not self.swLB.get_visible())
-			if self.swLB.get_visible():
-				self.lbWidthRatio = 0.28
-			else:
-				self.lbWidthRatio = 0.02
-			self.do_resize()
+			self.handle_lb_hideandseek()
 		elif button == self.btnUp:
 			dprint("INFO:btn_clicked: Up")
+			self.handle_lb_hideandseek(True)
 			self.lb_up(self.lbMain)
 		elif button == self.btnPrev:
 			dprint("INFO:btn_clicked: Prev")
