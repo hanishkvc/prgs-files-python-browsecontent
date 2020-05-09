@@ -157,7 +157,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.btnLast = Gtk.Button(label="Last")
 		self.btnLast.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnLast,13,10,1,1)
-		self.btnHide = Gtk.Button(label="Hide")
+		self.btnHide = Gtk.Button(label="[Un]Hide")
 		self.btnHide.connect("clicked", self.on_btn_clicked)
 		self.gridMain.attach(self.btnHide,14,10,1,1)
 		self.btnUp = Gtk.Button(label="Up")
@@ -297,10 +297,8 @@ class MainWin(Gtk.ApplicationWindow):
 			self.swLB.set_visible(not self.swLB.get_visible())
 			if self.swLB.get_visible():
 				self.lbWidthRatio = 0.28
-				self.btnHide.set_label("Hide")
 			else:
 				self.lbWidthRatio = 0.02
-				self.btnHide.set_label("UnHide")
 			self.do_resize()
 		elif button == self.btnUp:
 			dprint("INFO:btn_clicked: Up")
