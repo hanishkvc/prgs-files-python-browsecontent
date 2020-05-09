@@ -94,12 +94,11 @@ class MainWin(Gtk.ApplicationWindow):
 			self.btnHeight = minHeight
 		if self.btnHeight < 42:
 			self.btnHeight = 42
-		#self.mainHeightRatio = 1-(64/self.appHeight)
-		self.mainHeightRatio = 1-((self.btnHeight+8)/self.appHeight)
 		self.lbWidthRatio = 0.28
 		self.do_resize()
 
 	def do_resize(self):
+		self.mainHeightRatio = 1-((self.btnHeight+8)/self.appHeight)
 		swLBWidth = self.appWidth*self.lbWidthRatio
 		if (swLBWidth/(self.scrWidth-128)) > self.lbWidthRatio:
 			self.appWidth = self.scrWidth - 128
@@ -118,12 +117,11 @@ class MainWin(Gtk.ApplicationWindow):
 	def on_check_resize(self, container):
 		(newWidth, newHeight) = self.get_size()
 		dprint("INFO:AppWin:CheckResize1:{}".format(self.get_size()))
-		#if (newWidth < self.appWidth+10) and (newHeight < self.appHeight+10):
 		if (newWidth == self.appWidth) and (newHeight == self.appHeight):
 			return
 		if (newWidth > self.scrWidth) or (newHeight > self.scrHeight):
 			return
-		print("INFO:AppWin:CheckResize2:{}".format(self.get_size()))
+		dprint("INFO:AppWin:CheckResize2:{}".format(self.get_size()))
 		self.appWidth = newWidth
 		self.appHeight = newHeight
 		self.do_resize()
