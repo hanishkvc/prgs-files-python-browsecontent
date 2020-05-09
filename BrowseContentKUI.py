@@ -11,6 +11,7 @@ from gi.repository import WebKit2
 import sys
 import os
 import time
+import subprocess
 
 
 
@@ -19,6 +20,8 @@ DEFAULT_WIDTH = 800
 DEFAULT_HEIGHT = 600
 bResizeBothWays = True
 bBasePathInTitle = True
+bPlayInternal = True
+bPlayGeneric = True
 
 
 
@@ -183,6 +186,27 @@ class MainWin(Gtk.ApplicationWindow):
 		if sCurRow != None:
 			print(sCurRow)
 
+	def play_internal(self, theFile):
+		self.wvMain.load_uri("file:///%s"%(os.path.abspath(theFile)))
+
+	def play_external(self, theFile):
+		if bPlayGeneric:
+			sCmd = [ "xdg-open", theFile ]
+			subprocess.call(sCmd)
+		elif theFile.lower().endswith(".pdf"):
+			sCmd = [ "evince", theFile ]
+			subprocess.call(sCmd)
+		else:
+			print("ERRR:play_ext:Dont know how to play [%s]"%(theFile))
+
+	def play_file(self, theFile=None):
+		if theFile == None:
+			theFile = self.lastFile
+		if bPlayInternal:
+			self.play_internal(theFile)
+		else:
+			self.play_external(theFile)
+
 	def lb_play(self, theLB, thePath=None):
 		if thePath == None:
 			rowSel = theLB.get_selected_row()
@@ -197,7 +221,7 @@ class MainWin(Gtk.ApplicationWindow):
 			self.update_lb()
 		elif sType == "file":
 			self.lastFile = thePath
-			self.wvMain.load_uri("file:///%s"%(os.path.abspath(thePath)))
+			self.play_file(self.lastFile)
 		self.show_all()
 
 	def lb_up(self, theLB):
