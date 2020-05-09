@@ -191,10 +191,10 @@ class MainWin(Gtk.ApplicationWindow):
 		if sCurRow != None:
 			print(sCurRow)
 
-	def lb_select_fromtext(self, theLB, selText):
+	def lb_select_fromtext(self, theLB, selType, selText):
 		for row in theLB:
 			curText = row.get_child().get_text()
-			curText = curText.replace("dir:","",1)
+			curText = curText.replace(selType,"",1)
 			dprint("DBUG:lb_sel_fromtext:%s,%s"%(curText, selText))
 			if curText == selText:
 				theLB.select_row(row)
@@ -260,7 +260,7 @@ class MainWin(Gtk.ApplicationWindow):
 		if newPath != self.curPath:
 			self.curPath = newPath
 			self.update_lb()
-			self.lb_select_fromtext(self.lbMain, thePrevSel)
+			self.lb_select_fromtext(self.lbMain, "dir:", thePrevSel)
 			self.show_all()
 			print("Up:%s"%(self.curPath))
 		else:
