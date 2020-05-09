@@ -100,6 +100,9 @@ class MainWin(Gtk.ApplicationWindow):
 
 	def do_resize(self):
 		swLBWidth = self.appWidth*self.lbWidthRatio
+		if (swLBWidth/(self.scrWidth-128)) > self.lbWidthRatio:
+			self.appWidth = self.scrWidth - 128
+			swLBWidth = self.appWidth*self.lbWidthRatio
 		swLBHeight = self.appHeight*self.mainHeightRatio
 		swWVWidth = self.appWidth*(1-self.lbWidthRatio-0.02)
 		swWVHeight = swLBHeight
@@ -113,12 +116,13 @@ class MainWin(Gtk.ApplicationWindow):
 
 	def on_check_resize(self, container):
 		(newWidth, newHeight) = self.get_size()
+		print("INFO:AppWin:CheckResize1:{}".format(self.get_size()))
 		#if (newWidth < self.appWidth+10) and (newHeight < self.appHeight+10):
 		if (newWidth == self.appWidth) and (newHeight == self.appHeight):
 			return
 		if (newWidth > self.scrWidth) or (newHeight > self.scrHeight):
 			return
-		print("INFO:AppWin:CheckResize:{}".format(self.get_size()))
+		print("INFO:AppWin:CheckResize2:{}".format(self.get_size()))
 		self.appWidth = newWidth
 		self.appHeight = newHeight
 		self.do_resize()
@@ -309,6 +313,7 @@ class MainWin(Gtk.ApplicationWindow):
 			self.lb_play(self.lbMain, "dir:%s"%(thePath))
 			self.lb_select_fromtext(self.lbMain, "file:", theFile)
 		elif button == self.btnHide:
+			dprint("INFO:btn_clicked: Hide")
 			self.handle_lb_hideandseek()
 		elif button == self.btnUp:
 			dprint("INFO:btn_clicked: Up")
@@ -379,7 +384,7 @@ class MainWin(Gtk.ApplicationWindow):
 			lbl = Gtk.Label(label="file:%s"%(cur))
 			lbl.set_halign(Gtk.Align.START)
 			self.lbMain.add(lbl)
-		self.lbMain.set_size_request(self.appWidth*self.lbWidthRatio,self.appHeight*self.mainHeightRatio)
+		#self.lbMain.set_size_request(self.appWidth*self.lbWidthRatio,self.appHeight*self.mainHeightRatio)
 
 	def config_file(self):
 		return "%s/.browsecontent.cfg"%(self.basePath)
