@@ -51,12 +51,16 @@ class MainWin(Gtk.ApplicationWindow):
 		self.set_position(Gtk.WindowPosition.CENTER)
 		self.basePath = os.path.abspath(basePath)
 		self.curPath = self.basePath
+		self.lastFile = None
 		self.load_config()
 		self.prevClickTime = 0
 		self.rowActTime = -1
 		self.connect("check-resize", self.on_check_resize)
 		self.build_ui()
 		self.resize_setup()
+		if self.lastFile != None:
+			theLastFile = os.path.basename(self.lastFile)
+			self.lb_select_fromtext(self.lbMain, "file:", theLastFile)
 
 	def __get_title(self, basePath):
 		sTitle = ""
