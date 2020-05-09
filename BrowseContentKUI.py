@@ -43,11 +43,13 @@ class MainWin(Gtk.ApplicationWindow):
 			sTitlePlus = self.__get_title(basePath)
 		sTitle = "%s:%s"%(APPNAME, sTitlePlus)
 		Gtk.Window.__init__(self, title=sTitle, application=app)
+		self.scrWidth = self.get_screen().width()
 		if width == None:
-			width = self.get_screen().width()
+			width = self.scrWidth
 		self.appWidth = width
+		self.scrHeight = self.get_screen().height()
 		if height == None:
-			height = self.get_screen().height()
+			height = self.scrHeight
 		self.appHeight = height
 		self.set_default_size(self.appWidth, self.appHeight)
 		self.set_position(Gtk.WindowPosition.CENTER)
@@ -113,6 +115,8 @@ class MainWin(Gtk.ApplicationWindow):
 		(newWidth, newHeight) = self.get_size()
 		#if (newWidth < self.appWidth+10) and (newHeight < self.appHeight+10):
 		if (newWidth == self.appWidth) and (newHeight == self.appHeight):
+			return
+		if (newWidth > self.scrWidth) or (newHeight > self.scrHeight):
 			return
 		print("INFO:AppWin:CheckResize:{}".format(self.get_size()))
 		self.appWidth = newWidth
