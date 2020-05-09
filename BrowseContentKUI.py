@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # A simple browser of file contents in a given directory and its subdirs
-# v20200506IST2348, HanishKVC
+# v20200509IST1317, HanishKVC
 
 
 import gi
@@ -63,11 +63,13 @@ class MainWin(Gtk.ApplicationWindow):
 			sCur = os.path.basename(sPath)
 			sPath = os.path.dirname(sPath)
 			# if path ends with path separator, then basename of "" needs skipping
+			# if path has only path separator, then path remains same, need exiting
 			if sCur == "":
-				continue
-			if sPath == os.path.sep:
-				break
-			sTitle = "/%s/%s"%(sCur,sTitle)
+				if sPath == os.path.sep:
+					break
+				else:
+					continue
+			sTitle = "%s/%s"%(sCur,sTitle)
 		return sTitle
 
 	def resize_setup(self):
