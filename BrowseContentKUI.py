@@ -134,7 +134,6 @@ class MainWin(Gtk.ApplicationWindow):
 		self.gridMain.attach(self.swWV,6,1,9,9)
 		# Add EvinceView
 		self.evMain = EvinceView.View()
-		self.evModel = EvinceView.DocumentModel()
 		EvinceDocument.init()
 		# Add the buttons
 		self.btnBase = Gtk.Button(label="Base")
@@ -194,12 +193,14 @@ class MainWin(Gtk.ApplicationWindow):
 	def play_internal(self, theFile):
 		theFile = "file:///%s"%(os.path.abspath(theFile))
 		if self.wvMain.get_parent() != None:
-			self.wvMain.stop_loading()
+			# Force stopping of any previously played media
+			self.wvMain.load_html("<html> <head><title> Browser </title></head> <body> <center> Satyameva Jayate </center> </body> </html>")
 			self.swWV.remove(self.wvMain)
 		if self.evMain.get_parent() != None:
 			self.swWV.remove(self.evMain)
 		if theFile.lower().endswith(".pdf"):
 			self.evDoc = EvinceDocument.Document.factory_get_document(theFile)
+			self.evModel = EvinceView.DocumentModel()
 			self.evModel.set_document(self.evDoc)
 			self.evMain.set_model(self.evModel)
 			self.swWV.add(self.evMain)
