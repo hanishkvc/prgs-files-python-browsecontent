@@ -191,6 +191,13 @@ class MainWin(Gtk.ApplicationWindow):
 		if sCurRow != None:
 			print(sCurRow)
 
+	def lb_select_fromtext(self, theLB, selText):
+		for row in theLB:
+			if row.get_child().get_text() == selText:
+				theLB.set_focus_child(row)
+				row.get_child().grab_focus()
+				break
+
 	def play_internal(self, theFile):
 		theFile = "file:///%s"%(os.path.abspath(theFile))
 		if self.wvMain.get_parent() != None:
@@ -245,10 +252,11 @@ class MainWin(Gtk.ApplicationWindow):
 		self.show_all()
 
 	def lb_up(self, theLB):
-		newPath = self.curPath.rsplit('/',1)[0]
+		[newPath, thePrevSel] = self.curPath.rsplit('/',1)
 		if newPath != self.curPath:
 			self.curPath = newPath
 			self.update_lb()
+			self.lb_select_fromtext(self.lbMain, thePrevSel)
 			self.show_all()
 			print("Up:%s"%(self.curPath))
 		else:
