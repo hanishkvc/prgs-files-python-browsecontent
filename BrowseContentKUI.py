@@ -25,6 +25,7 @@ bResizeBothWays = True
 bBasePathInTitle = True
 bPlayInternal = True
 bPlayGeneric = True
+bLBScrollWidth = True
 
 
 
@@ -116,7 +117,7 @@ class MainWin(Gtk.ApplicationWindow):
 
 	def on_check_resize(self, container):
 		(newWidth, newHeight) = self.get_size()
-		print("INFO:AppWin:CheckResize1:{}".format(self.get_size()))
+		dprint("INFO:AppWin:CheckResize1:{}".format(self.get_size()))
 		#if (newWidth < self.appWidth+10) and (newHeight < self.appHeight+10):
 		if (newWidth == self.appWidth) and (newHeight == self.appHeight):
 			return
@@ -132,7 +133,10 @@ class MainWin(Gtk.ApplicationWindow):
 		self.add(self.gridMain)
 		# Add the listbox in a scrolled window
 		self.swLB = Gtk.ScrolledWindow()
-		self.swLB.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+		if bLBScrollWidth:
+			self.swLB.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+		else:
+			self.swLB.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
 		self.lbMain = Gtk.ListBox()
 		#self.swLB.add_with_viewport(self.lbMain)
 		self.swLB.add(self.lbMain)
