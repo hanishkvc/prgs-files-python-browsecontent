@@ -60,9 +60,9 @@ class MainWin(Gtk.ApplicationWindow):
 	def do_resize(self):
 		#heightRatio = 1-(64/self.scrHeight)
 		heightRatio = 1-((self.btnHeight+8)/self.scrHeight)
-		swLBWidth = self.scrWidth*0.28
+		swLBWidth = self.scrWidth*0.29
 		swLBHeight = self.scrHeight*heightRatio
-		swWVWidth = self.scrWidth*0.68
+		swWVWidth = self.scrWidth*0.69
 		swWVHeight = swLBHeight
 		if not bResizeBothWays:
 			self.swLB.set_min_content_width(swLBWidth)
