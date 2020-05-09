@@ -134,6 +134,8 @@ class MainWin(Gtk.ApplicationWindow):
 		self.gridMain.attach(self.swWV,6,1,9,9)
 		# Add EvinceView
 		self.evMain = EvinceView.View()
+		self.evModel = EvinceView.DocumentModel()
+		EvinceDocument.init()
 		# Add the buttons
 		self.btnBase = Gtk.Button(label="Base")
 		self.btnBase.connect("clicked", self.on_btn_clicked)
@@ -197,6 +199,9 @@ class MainWin(Gtk.ApplicationWindow):
 		if self.evMain.get_parent() != None:
 			self.swWV.remove(self.evMain)
 		if theFile.lower().endswith(".pdf"):
+			self.evDoc = EvinceDocument.Document.factory_get_document(theFile)
+			self.evModel.set_document(self.evDoc)
+			self.evMain.set_model(self.evModel)
 			self.swWV.add(self.evMain)
 		else:
 			self.swWV.add(self.wvMain)
