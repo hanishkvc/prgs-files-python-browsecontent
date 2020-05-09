@@ -277,7 +277,9 @@ class MainWin(Gtk.ApplicationWindow):
 		elif button == self.btnLast:
 			dprint("INFO:btn_clicked: Last")
 			thePath = os.path.dirname(self.lastFile)
+			theFile = os.path.basename(self.lastFile)
 			self.lb_play(self.lbMain, "dir:%s"%(thePath))
+			self.lb_select_fromtext(self.lbMain, "file:", theFile)
 		elif button == self.btnUp:
 			dprint("INFO:btn_clicked: Up")
 			self.lb_up(self.lbMain)
