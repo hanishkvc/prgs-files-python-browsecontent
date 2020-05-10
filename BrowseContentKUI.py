@@ -146,6 +146,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.lbLabel = Gtk.Label()
 		self.lbLabel.set_label("Vasudhaiva Kutumbakam")
 		self.lbLabel.set_hexpand(True)
+		self.lbLabel.set_halign(Gtk.Align.START)
 		self.gridLB.attach(self.lbMain,0,1,1,8)
 		self.gridLB.attach(self.lbLabel,0,0,1,1)
 		self.gridMain.attach(self.swLB,1,1,4,9)
@@ -386,7 +387,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.clear_lb()
 		if path == None:
 			path = self.curPath
-		self.lbLabel.set_label(os.path.basename(path))
+		self.lbLabel.set_label(">>%s<<"%(os.path.basename(path)))
 		# Get list of current path contents
 		dirContents = os.listdir(path)
 		self.curDirList = []
