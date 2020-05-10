@@ -454,6 +454,15 @@ class BrowseContentKUI(Gtk.Application):
 		#self.wMain = MainWin(self, self.basePath, None, None)
 		self.wMain = MainWin(self, self.basePath)
 		self.wMain.show_all()
+		icon_magic()
+
+
+
+def icon_magic():
+	ico=Gtk.IconTheme.get_default().load_icon("folder-open",128,0)
+	statusIcon=Gtk.StatusIcon()
+	statusIcon.set_from_pixbuf(ico)
+	statusIcon.set_visible(True)
 
 
 
