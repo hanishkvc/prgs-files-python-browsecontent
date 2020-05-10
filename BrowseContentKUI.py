@@ -133,16 +133,21 @@ class MainWin(Gtk.ApplicationWindow):
 		self.add(self.gridMain)
 		# Add the listbox in a scrolled window
 		self.swLB = Gtk.ScrolledWindow()
-		self.gridLB = Gtk.VBox()
+		self.gridLB = Gtk.Grid()
+		self.gridLB.set_hexpand(True)
 		self.swLB.add(self.gridLB)
 		if bLBScrollWidth:
 			self.swLB.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 		else:
 			self.swLB.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
 		self.lbMain = Gtk.ListBox()
+		self.lbMain.set_hexpand(True)
+		#self.lbMain.set_vexpand(True)
 		self.lbLabel = Gtk.Label()
-		self.gridLB.add(self.lbMain)
-		self.gridLB.add(self.lbLabel)
+		self.lbLabel.set_label("Vasudhaiva Kutumbakam")
+		self.lbLabel.set_hexpand(True)
+		self.gridLB.attach(self.lbMain,0,1,1,8)
+		self.gridLB.attach(self.lbLabel,0,0,1,1)
 		self.gridMain.attach(self.swLB,1,1,4,9)
 		self.update_lb()
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
@@ -381,6 +386,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.clear_lb()
 		if path == None:
 			path = self.curPath
+		self.lbLabel.set_label(os.path.basename(path))
 		# Get list of current path contents
 		dirContents = os.listdir(path)
 		self.curDirList = []
