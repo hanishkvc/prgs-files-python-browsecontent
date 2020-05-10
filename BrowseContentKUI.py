@@ -26,6 +26,8 @@ bBasePathInTitle = True
 bPlayInternal = True
 bPlayGeneric = True
 bLBScrollWidth = True
+bSelectWrapToBegin = False
+bSelectFirstIfNotFound = False
 
 
 
@@ -196,8 +198,22 @@ class MainWin(Gtk.ApplicationWindow):
 					break
 			if not bFound:
 				rowPrev = row
-		if rowNext == None:
+		# If one wants to start from first row, when no row already selected
+		if not bFound and bSelectFirstIfNotFound:
 			rowNext = rowFirst
+			rowPrev = rowFirst
+		# Else prev starts at last next starts at first
+		if rowNext == None:
+			if bSelectWrapToBegin:
+				rowNext = rowFirst
+			else:
+				# Could merge as if bSelectWrapToBegin or (rowSel == None)
+				# then rowNext=rowFirst else rowNext=rowSel
+				# but keeping logic simple, stupid and straight is prefered
+				if rowSel != None:
+					rowNext = rowSel
+				else:
+					rowNext = rowFirst
 		if rowPrev == None:
 			rowPrev = rowFirst
 		sCurRow = None
