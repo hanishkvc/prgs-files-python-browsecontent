@@ -133,13 +133,16 @@ class MainWin(Gtk.ApplicationWindow):
 		self.add(self.gridMain)
 		# Add the listbox in a scrolled window
 		self.swLB = Gtk.ScrolledWindow()
+		self.gridLB = Gtk.Grid()
+		self.swLB.add(self.gridLB)
 		if bLBScrollWidth:
 			self.swLB.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 		else:
 			self.swLB.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
 		self.lbMain = Gtk.ListBox()
-		#self.swLB.add_with_viewport(self.lbMain)
-		self.swLB.add(self.lbMain)
+		self.lbLabel = Gtk.Label()
+		self.gridLB.attach(self.lbMain,1,1,1,1)
+		self.gridLB.attach(self.lbLabel,1,2,1,1)
 		self.gridMain.attach(self.swLB,1,1,4,9)
 		self.update_lb()
 		self.lbMain.connect("row-activated", self.on_lb_row_activated)
