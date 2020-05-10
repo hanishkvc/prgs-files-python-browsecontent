@@ -19,7 +19,7 @@ import subprocess
 
 
 APPNAME = "BrowseContentKUI"
-DEFAULT_WIDTH = 800
+DEFAULT_WIDTH = 1280
 DEFAULT_HEIGHT = 600
 bResizeBothWays = True
 bBasePathInTitle = True
