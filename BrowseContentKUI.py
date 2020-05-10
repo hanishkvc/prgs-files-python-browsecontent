@@ -106,15 +106,15 @@ class MainWin(Gtk.ApplicationWindow):
 			self.appWidth = self.scrWidth - 128
 			swLBWidth = self.appWidth*self.lbWidthRatio
 		swLBHeight = self.appHeight*self.mainHeightRatio
-		swWVWidth = self.appWidth*(1-self.lbWidthRatio-0.02)
-		swWVHeight = swLBHeight
+		swMainWidth = self.appWidth*(1-self.lbWidthRatio-0.02)
+		swMainHeight = swLBHeight
 		if not bResizeBothWays:
 			self.swLB.set_min_content_width(swLBWidth)
 			self.swLB.set_min_content_height(swLBHeight)
 			self.swLB.set_max_content_height(swLBHeight)
-			self.swWV.set_min_content_width(swWVWidth)
+			self.swMain.set_min_content_width(swMainWidth)
 		self.swLB.set_size_request(swLBWidth, swLBHeight)
-		self.swWV.set_size_request(swWVWidth, swWVHeight)
+		self.swMain.set_size_request(swMainWidth, swMainHeight)
 
 	def on_check_resize(self, container):
 		(newWidth, newHeight) = self.get_size()
@@ -150,10 +150,11 @@ class MainWin(Gtk.ApplicationWindow):
 		# Add a WebView
 		self.wvMain = WebKit2.WebView()
 		self.wvMain.load_html("<html> <head><title> Browser </title></head> <body> <center> Satyameva Jayate </center> </body> </html>")
-		self.swWV = Gtk.ScrolledWindow()
-		self.swWV.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-		self.swWV.add(self.wvMain)
-		self.gridMain.attach(self.swWV,6,1,9,9)
+		# Add the content views' scrolling window
+		self.swMain = Gtk.ScrolledWindow()
+		self.swMain.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+		self.swMain.add(self.wvMain)
+		self.gridMain.attach(self.swMain,6,1,9,9)
 		# Add EvinceView
 		self.evMain = EvinceView.View()
 		EvinceDocument.init()
@@ -246,17 +247,17 @@ class MainWin(Gtk.ApplicationWindow):
 		if self.wvMain.get_parent() != None:
 			# Force stopping of any previously played media
 			self.wvMain.load_html("<html> <head><title> Browser </title></head> <body> <center> Satyameva Jayate </center> </body> </html>")
-			self.swWV.remove(self.wvMain)
+			self.swMain.remove(self.wvMain)
 		if self.evMain.get_parent() != None:
-			self.swWV.remove(self.evMain)
+			self.swMain.remove(self.evMain)
 		if theFile.lower().endswith(".pdf"):
 			self.evDoc = EvinceDocument.Document.factory_get_document(theFile)
 			self.evModel = EvinceView.DocumentModel()
 			self.evModel.set_document(self.evDoc)
 			self.evMain.set_model(self.evModel)
-			self.swWV.add(self.evMain)
+			self.swMain.add(self.evMain)
 		else:
-			self.swWV.add(self.wvMain)
+			self.swMain.add(self.wvMain)
 			self.wvMain.load_uri(theFile)
 
 	def play_external(self, theFile):
