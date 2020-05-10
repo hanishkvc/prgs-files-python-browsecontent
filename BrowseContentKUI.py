@@ -46,6 +46,7 @@ class MainWin(Gtk.ApplicationWindow):
 			sTitlePlus = self.__get_title(basePath)
 		sTitle = "%s:%s"%(APPNAME, sTitlePlus)
 		Gtk.Window.__init__(self, title=sTitle, application=app)
+		self.__set_icon()
 		self.scrWidth = self.get_screen().width()
 		if width == None:
 			width = self.scrWidth
@@ -89,6 +90,12 @@ class MainWin(Gtk.ApplicationWindow):
 					continue
 			sTitle = "%s/%s"%(sCur,sTitle)
 		return sTitle
+
+	def __set_icon(self):
+		self.set_icon_from_file(os.path.abspath("./res/AppIcon.png"))
+		ico=Gtk.IconTheme.get_default().load_icon("folder-open",128,0)
+		self.set_default_icon(ico)
+		self.set_icon_name("folder-open")
 
 	def resize_setup(self):
 		(minHeight, self.btnHeight) = self.btnUp.get_preferred_height()
@@ -454,7 +461,7 @@ class BrowseContentKUI(Gtk.Application):
 		#self.wMain = MainWin(self, self.basePath, None, None)
 		self.wMain = MainWin(self, self.basePath)
 		self.wMain.show_all()
-		icon_magic()
+		#icon_magic()
 
 
 
