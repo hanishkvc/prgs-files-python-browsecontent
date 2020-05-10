@@ -165,7 +165,7 @@ class MainWin(Gtk.ApplicationWindow):
 		self.swMain.add(self.wvMain)
 		self.gridMain.attach(self.swMain,6,1,9,9)
 		# Add EvinceView
-		self.evMain = EvinceView.View()
+		self.evMain = None
 		EvinceDocument.init()
 		self.evDoc = None
 		# Add the buttons
@@ -257,9 +257,10 @@ class MainWin(Gtk.ApplicationWindow):
 			# Force stopping of any previously played media
 			self.wvMain.load_html("<html> <head><title> Browser </title></head> <body> <center> Satyameva Jayate </center> </body> </html>")
 			self.swMain.remove(self.wvMain)
-		if self.evMain.get_parent() != None:
+		if (self.evMain != None) and (self.evMain.get_parent() != None):
 			self.swMain.remove(self.evMain)
 		if theFile.lower().endswith(".pdf"):
+			self.evMain = EvinceView.View()
 			self.evDoc = EvinceDocument.Document.factory_get_document(theFile)
 			self.evModel = EvinceView.DocumentModel()
 			self.evModel.set_document(self.evDoc)
