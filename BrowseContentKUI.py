@@ -433,6 +433,7 @@ class MainWin(Gtk.ApplicationWindow):
 			theLastFile = theLastFile[1:]
 		f.write("lastFile:%s"%(theLastFile))
 		f.close()
+		print("INFO:save_config:lastFile:%s"%(theLastFile))
 
 	def load_config(self):
 		try:

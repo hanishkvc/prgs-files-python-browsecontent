@@ -40,6 +40,13 @@ the needed programs, as will be triggered by xdg-open, if one were to ask it to
 play/view/open a given content.
 
 
+TODO
+========
+
+Have to pick the list of extensions to skip from file/dir listing shown by prg,
+from a config file
+
+
 Urge for creating / Scratch the Itch
 ======================================
 
